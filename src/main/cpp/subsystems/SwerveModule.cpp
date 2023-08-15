@@ -68,7 +68,8 @@ void SwerveModule::SetDesiredState(
   m_turningMotor.Set(turnOutput);
 }
 
-void SwerveModule::ResetEncoders() {
-  m_driveEncoder.Reset();
-  m_turningEncoder.Reset();
-}
+// No reason to reset encoders since they are absolute
+//void SwerveModule::ResetEncoders() {
+//  m_driveEncoder.Reset();
+//  m_turningEncoder.Reset();
+//}

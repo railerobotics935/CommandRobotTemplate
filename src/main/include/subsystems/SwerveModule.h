@@ -14,7 +14,9 @@
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/trajectory/TrapezoidProfile.h>
 
-#include <rev/CANSparkMax.h>
+#include "ctre/phoenix.h"
+#include "rev/CANSparkMax.h"
+#include "rev/SparkMaxAnalogSensor.h"
 
 #include "Constants.h"
 
@@ -30,7 +32,7 @@ class SwerveModule {
 
   void SetDesiredState(const frc::SwerveModuleState& state);
 
-  void ResetEncoders();
+  // void ResetEncoders(); currently using absolute encoders, so you can't reset them digitaly
 
  private:
   // We have to use meters here instead of radians due to the fact that
