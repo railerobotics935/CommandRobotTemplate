@@ -6,7 +6,7 @@
 
 #include <numbers>
 
-#include <frc/Encoder.h>
+#include <frc/AnalogInput.h>
 #include <frc/controller/PIDController.h>
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/geometry/Rotation2d.h>
@@ -23,8 +23,7 @@
 class SwerveModule {
  public:
   SwerveModule(int driveMotorChannel, int turningMotorChannel,
-               const int driveEncoderPorts[2], const int turningEncoderPorts[2],
-               bool driveEncoderReversed, bool turningEncoderReversed);
+                const int turningEncoderPort, const double turningEncoderOffset);
 
   frc::SwerveModuleState GetState();
 
@@ -47,8 +46,8 @@ class SwerveModule {
   rev::CANSparkMax m_driveMotor;
   rev::CANSparkMax m_turningMotor;
 
-  frc::Encoder m_driveEncoder;
-  frc::Encoder m_turningEncoder;
+  rev::SparkMaxRelativeEncoder m_driveEncoder;
+  frc::AnalogInput m_turningEncoder;
 
   bool m_reverseDriveEncoder;
   bool m_reverseTurningEncoder;

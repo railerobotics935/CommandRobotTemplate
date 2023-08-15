@@ -10,17 +10,15 @@
 
 #include "Constants.h"
 
-SwerveModule::SwerveModule(int driveMotorChannel, int turningMotorChannel,
-                           const int driveEncoderPorts[],
-                           const int turningEncoderPorts[],
-                           bool driveEncoderReversed,
-                           bool turningEncoderReversed)
+SwerveModule::SwerveModule(int driveMotorChannel, 
+                        int turningMotorChannel,
+                        const int turningEncoderPort, 
+                        const double turningEncoderOffset)
     : m_driveMotor(driveMotorChannel, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
       m_turningMotor(turningMotorChannel, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
-      m_driveEncoder(driveEncoderPorts[0], driveEncoderPorts[1]),
-      m_turningEncoder(turningEncoderPorts[0], turningEncoderPorts[1]),
-      m_reverseDriveEncoder(driveEncoderReversed),
-      m_reverseTurningEncoder(turningEncoderReversed) {
+      m_driveEncoder(m_driveMotor.GetEncoder()),
+      m_turningEncoder(turningEncoderPort){
+
   // Set the distance per pulse for the drive encoder. We can simply use the
   // distance traveled for one rotation of the wheel divided by the encoder
   // resolution.
