@@ -22,7 +22,7 @@
 
 class SwerveModule {
  public:
-  SwerveModule(int driveMotorChannel, int turningMotorChannel,
+  SwerveModule(int driveMotorPort, int turningMotorPort,
                 const int turningEncoderPort, const double turningEncoderOffset);
 
   frc::SwerveModuleState GetState();
