@@ -7,6 +7,18 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
+
+/**
+ * This is meant to be a robot framework bassed on the command robot, however it is
+ * also currently being used specificly for the 2023 frc robot by team 935, Karrot
+ * 
+ * First bassed off of the wpilib example program for the swerve auto command.
+ *
+ * TODO: Convert all of the details for the serve drive over to the 2023 robot configuration
+ * 
+ *  Erik Kaufman
+*/
+
 void Robot::RobotInit() {}
 
 /**

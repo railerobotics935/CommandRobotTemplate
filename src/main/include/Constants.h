@@ -27,6 +27,8 @@
  * they are needed.
  */
 
+// NOTE: These numbers are still NOT ACCURATE these numbers need to be calibrated to the robot being used
+// current Configuration is being aimed for 2023 robot Karrot
 namespace DriveConstants {
 constexpr int kFrontLeftDriveMotorPort = 0;
 constexpr int kRearLeftDriveMotorPort = 2;
@@ -38,20 +40,15 @@ constexpr int kRearLeftTurningMotorPort = 3;
 constexpr int kFrontRightTurningMotorPort = 5;
 constexpr int kRearRightTurningMotorPort = 7;
 
-constexpr int kFrontLeftTurningEncoderPorts[2]{0, 1};
-constexpr int kRearLeftTurningEncoderPorts[2]{2, 3};
-constexpr int kFrontRightTurningEncoderPorts[2]{4, 5};
-constexpr int kRearRightTurningEncoderPorts[2]{6, 7};
+constexpr int kFrontLeftTurningEncoderPort = 1;
+constexpr int kRearLeftTurningEncoderPort = 3;
+constexpr int kFrontRightTurningEncoderPort = 5;
+constexpr int kRearRightTurningEncoderPort = 7;
 
-constexpr bool kFrontLeftTurningEncoderReversed = false;
-constexpr bool kRearLeftTurningEncoderReversed = true;
-constexpr bool kFrontRightTurningEncoderReversed = false;
-constexpr bool kRearRightTurningEncoderReversed = true;
-
-constexpr int kFrontLeftDriveEncoderPorts[2]{8, 9};
-constexpr int kRearLeftDriveEncoderPorts[2]{10, 11};
-constexpr int kFrontRightDriveEncoderPorts[2]{12, 13};
-constexpr int kRearRightDriveEncoderPorts[2]{14, 15};
+constexpr int kFrontLeftDriveEncoderPort = 9;
+constexpr int kRearLeftDriveEncoderPort = 11;
+constexpr int kFrontRightDriveEncoderPort = 13;
+constexpr int kRearRightDriveEncoderPort = 15;
 
 constexpr bool kFrontLeftDriveEncoderReversed = false;
 constexpr bool kRearLeftDriveEncoderReversed = true;
@@ -74,22 +71,25 @@ constexpr double kPRearRightVel = 0.5;
 }  // namespace DriveConstants
 
 namespace ModuleConstants {
+// This is something to try and get rid of
+// If feels like there should be something like this built into the systems
+constexpr double ANALOG_TO_RAD_FACTOR = 1.2566;     // 0 to 5.0 volt = 2PI rad
+constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt = 2PI rad
+
 constexpr int kEncoderCPR = 1024;
 constexpr double kWheelDiameterMeters = 0.15;
-constexpr double kDriveEncoderDistancePerPulse =
-    // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterMeters * std::numbers::pi) /
-    static_cast<double>(kEncoderCPR);
+constexpr int kEncoderResolution = 42;
+constexpr double kGearRatio = 6.75;
 
-constexpr double kTurningEncoderDistancePerPulse =
-    // Assumes the encoders are directly mounted on the wheel shafts
-    (std::numbers::pi * 2) / static_cast<double>(kEncoderCPR);
+constexpr double kDriveEncoderConversionFacotr = (2.0 * std::numbers::pi * kWheelDiameterMeters 
+                                                / (kGearRatio * kEncoderResolution));
 
 constexpr double kPModuleTurningController = 1;
 constexpr double kPModuleDriveController = 1;
 }  // namespace ModuleConstants
 
 namespace AutoConstants {
+
 constexpr auto kMaxSpeed = 3_mps;
 constexpr auto kMaxAcceleration = 3_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;

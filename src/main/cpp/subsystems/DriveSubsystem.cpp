@@ -16,10 +16,8 @@ using namespace DriveConstants;
 DriveSubsystem::DriveSubsystem()
     : m_frontLeft{kFrontLeftDriveMotorPort,
                   kFrontLeftTurningMotorPort,
-                  kFrontLeftDriveEncoderPorts,
-                  kFrontLeftTurningEncoderPorts,
-                  kFrontLeftDriveEncoderReversed,
-                  kFrontLeftTurningEncoderReversed},
+                  kFrontLeftDriveEncoderPort,
+                  kFrontLeftTurningEncoderPort},
 
       m_rearLeft{
           kRearLeftDriveMotorPort,       kRearLeftTurningMotorPort,
