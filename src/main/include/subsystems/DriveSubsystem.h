@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <frc/ADXRS450_Gyro.h>
 #include <frc/Encoder.h>
 #include <frc/drive/MecanumDrive.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/geometry/Rotation2d.h>
+#include <frc/ADIS16470_IMU.h>
 #include <frc/interfaces/Gyro.h>
 #include <frc/kinematics/ChassisSpeeds.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
@@ -47,6 +47,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   /**
    * Resets the drive encoders to currently read a position of 0.
+   * 
+   * IMPORTAND: Currently using ablosute encoders, so you can't reset them.
    */
   void ResetEncoders();
 
@@ -58,7 +60,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   /**
    * Returns the heading of the robot.
    *
-   * @return the robot's heading in degrees, from 180 to 180
+   * @return the robot's heading in degrees, From Something to something
    */
   units::degree_t GetHeading() const;
 
@@ -109,7 +111,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   SwerveModule m_rearRight;
 
   // The gyro sensor
-  frc::ADXRS450_Gyro m_gyro;
+  frc::ADIS16470_IMU m_gyro;
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
