@@ -30,30 +30,30 @@
 // NOTE: These numbers are still NOT ACCURATE these numbers need to be calibrated to the robot being used
 // current Configuration is being aimed for 2023 robot Karrot
 namespace DriveConstants {
-constexpr int kFrontLeftDriveMotorPort = 0;
-constexpr int kRearLeftDriveMotorPort = 2;
-constexpr int kFrontRightDriveMotorPort = 4;
-constexpr int kRearRightDriveMotorPort = 6;
 
-constexpr int kFrontLeftTurningMotorPort = 1;
-constexpr int kRearLeftTurningMotorPort = 3;
-constexpr int kFrontRightTurningMotorPort = 5;
-constexpr int kRearRightTurningMotorPort = 7;
+// CAN Sparkmax id numbers
+constexpr int kFrontLeftDriveMotorPort = 11;
+constexpr int kRearLeftDriveMotorPort = 9;
+constexpr int kFrontRightDriveMotorPort = 19;
+constexpr int kRearRightDriveMotorPort = 21;
 
-constexpr int kFrontLeftTurningEncoderPort = 1;
-constexpr int kRearLeftTurningEncoderPort = 3;
-constexpr int kFrontRightTurningEncoderPort = 5;
-constexpr int kRearRightTurningEncoderPort = 7;
+constexpr int kFrontLeftTurningMotorPort = 12;
+constexpr int kRearLeftTurningMotorPort = 10;
+constexpr int kFrontRightTurningMotorPort = 20;
+constexpr int kRearRightTurningMotorPort = 2;
 
-constexpr int kFrontLeftDriveEncoderPort = 9;
-constexpr int kRearLeftDriveEncoderPort = 11;
-constexpr int kFrontRightDriveEncoderPort = 13;
-constexpr int kRearRightDriveEncoderPort = 15;
+// Anolog input ports on roborio
+constexpr int kFrontLeftTurningEncoderPort = 0;
+constexpr int kRearLeftTurningEncoderPort = 1;
+constexpr int kFrontRightTurningEncoderPort = 2;
+constexpr int kRearRightTurningEncoderPort = 3;
 
-constexpr bool kFrontLeftDriveEncoderReversed = false;
-constexpr bool kRearLeftDriveEncoderReversed = true;
-constexpr bool kFrontRightDriveEncoderReversed = false;
-constexpr bool kRearRightDriveEncoderReversed = true;
+// Offsets in radians for the encoders. the first number to to make zero forward, after that we
+// subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
+constexpr double kFrontLeftDriveEncoderOffset = 1.113 - std::numbers::pi;
+constexpr double kRearLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
+constexpr double kFrontRightDriveEncoderOffset = -0.155 - std::numbers::pi;
+constexpr double kRearRightDriveEncoderOffset = -1.850 - std::numbers::pi;
 
 // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
 // These characterization values MUST be determined either experimentally or

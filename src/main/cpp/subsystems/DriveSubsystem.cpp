@@ -16,26 +16,26 @@ using namespace DriveConstants;
 DriveSubsystem::DriveSubsystem()
     : m_frontLeft{kFrontLeftDriveMotorPort,
                   kFrontLeftTurningMotorPort,
-                  kFrontLeftDriveEncoderPort,
-                  kFrontLeftTurningEncoderPort},
+                  kFrontLeftTurningEncoderPort,
+                  kFrontLeftDriveEncoderOffset},
 
       m_rearLeft{
           kRearLeftDriveMotorPort,       
           kRearLeftTurningMotorPort,
-          kRearLeftDriveEncoderPort,     
-          kRearLeftTurningEncoderPort},
+          kRearLeftTurningEncoderPort,
+          kRearLeftDriveEncoderOffset},
 
       m_frontRight{
           kFrontRightDriveMotorPort,       
           kFrontRightTurningMotorPort,
-          kFrontRightDriveEncoderPort,     
-          kFrontRightTurningEncoderPort},
+          kFrontRightTurningEncoderPort,
+          kFrontRightDriveEncoderOffset},
 
       m_rearRight{
           kRearRightDriveMotorPort,       
-          kRearRightTurningMotorPort,
-          kRearRightDriveEncoderPort,     
-          kRearRightTurningEncoderPort},
+          kRearRightTurningMotorPort,  
+          kRearRightTurningEncoderPort,
+          kRearRightDriveEncoderOffset},
 
       m_odometry{kDriveKinematics,
                  m_gyro.GetAngle(),
