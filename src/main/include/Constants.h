@@ -27,8 +27,6 @@
  * they are needed.
  */
 
-// NOTE: These numbers are still NOT ACCURATE these numbers need to be calibrated to the robot being used
-// current Configuration is being aimed for 2023 robot Karrot
 namespace DriveConstants {
 
 // CAN Sparkmax id numbers

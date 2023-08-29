@@ -49,9 +49,6 @@ class SwerveModule {
   rev::SparkMaxRelativeEncoder m_driveEncoder;
   frc::AnalogInput m_turningEncoder;
 
-  bool m_reverseDriveEncoder;
-  bool m_reverseTurningEncoder;
-
   double m_kTurningEncoderOffset;
 
   frc2::PIDController m_drivePIDController{
