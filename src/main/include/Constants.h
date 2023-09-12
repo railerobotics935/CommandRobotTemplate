@@ -97,12 +97,28 @@ constexpr double kPXController = 0.5;
 constexpr double kPYController = 0.5;
 constexpr double kPThetaController = 0.5;
 
-//
-
 extern const frc::TrapezoidProfile<units::radians>::Constraints
     kThetaControllerConstraints;
 
 }  // namespace AutoConstants
+
+namespace ControllerContstants{
+
+// Controller Constants for the flight elite drive controller
+
+// Axis indexes
+constexpr int kDriveLeftYIndex = 2; // An imput UP creates a NEGATIVE output
+constexpr int kDriveLeftXIndex = 4; // An imput RIGHT creates a NEGATIVE output
+constexpr int kDriveRightYIndex = 1; // An imput UP creates a NEGATIVE output
+constexpr int kDriveRightXIndex = 0; // An imput RIGHT creates a NEGATIVE output
+
+// Button/Swtich indexes
+constexpr int kFeildReletiveSwitchIndex = 0;
+constexpr int kParkSwitchIndex = 1;
+constexpr int kSlowStateSwtichIndex = 4;
+constexpr int kResetGyroButtonIndex = 2;
+
+} // namespace ControllerContstants
 
 namespace IOConstants {
 constexpr int kDriverControllerPort = 0;

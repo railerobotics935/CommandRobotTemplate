@@ -38,19 +38,18 @@ class SwerveModule {
   // ProfiledPIDController's constraints only take in meters per second and
   // meters per second squared.
 
-  static constexpr auto kModuleMaxAngularVelocity =
-      units::radians_per_second_t{std::numbers::pi};
+  static constexpr auto kModuleMaxAngularVelocity = units::radians_per_second_t{std::numbers::pi};
   static constexpr auto kModuleMaxAngularAcceleration =
       units::radians_per_second_squared_t{std::numbers::pi * 2.0};
-
+  
   rev::CANSparkMax m_driveMotor;
   rev::CANSparkMax m_turningMotor;
-
+  
   rev::SparkMaxRelativeEncoder m_driveEncoder;
   frc::AnalogInput m_turningEncoder;
-
+  
   double m_kTurningEncoderOffset;
-
+  
   frc2::PIDController m_drivePIDController{
       ModuleConstants::kPModuleDriveController, 0, 0};
   frc::ProfiledPIDController<units::radians> m_turningPIDController{
