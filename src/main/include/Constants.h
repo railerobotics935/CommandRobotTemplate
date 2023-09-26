@@ -113,7 +113,7 @@ constexpr int kDriveRightYIndex = 1; // An imput UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 0; // An imput RIGHT creates a NEGATIVE output
 
 // Button/Swtich indexes
-constexpr int kFeildReletiveSwitchIndex = 0;
+constexpr int kFieldRelativeSwitchIndex = 0;
 constexpr int kParkSwitchIndex = 1;
 constexpr int kSlowStateSwtichIndex = 4;
 constexpr int kResetGyroButtonIndex = 2;

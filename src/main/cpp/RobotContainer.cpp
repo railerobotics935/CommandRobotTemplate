@@ -16,8 +16,10 @@
 #include <frc2/command/SwerveControllerCommand.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/CommandPtr.h>
+#include <frc2/command/Commands.h>
 #include <units/angle.h>
 #include <units/velocity.h>
+#include <frc2/command/button/JoystickButton.h>
 
 #include "pathplanner/lib/auto/SwerveAutoBuilder.h"
 #include "pathplanner/lib/PathPlanner.h"
@@ -40,14 +42,25 @@ RobotContainer::RobotContainer() {
     m_drive.SetDefaultCommand(frc2::RunCommand(
         [this] {
             m_drive.Drive(
-                units::meters_per_second_t{m_driverController.GetLeftY()},
-                units::meters_per_second_t{m_driverController.GetLeftX()},
-                units::radians_per_second_t{m_driverController.GetRightX()}, false);
+                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftYIndex)},
+                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftXIndex)},
+                units::radians_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveRightXIndex)}, 
+                m_driveController.GetRawButton(ControllerContstants::kFieldRelativeSwitchIndex));
         },
         {&m_drive}));
 }
 
-void RobotContainer::ConfigureButtonBindings() {}
+void RobotContainer::ConfigureButtonBindings() {
+    frc2::JoystickButton resetButton(&m_driveController, ControllerContstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the `Y` button on exampleController    
+    
+   // resetButton.OnTrue(frc2::cmd::Run([&m_drive] {m_drive.ZeroHeading();}, [&m_drive]));
+
+   // m_driveController.GetRawButtonPressed(ControllerContstants::kResetGyroButtonIndex).OnTrue(m_drive.ZeroHeading());
+}
+
+bool RobotContainer::GetFieldRelativeState() {
+    return isFieldRelative;
+}
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
     // Set up config for trajectory

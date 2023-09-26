@@ -31,11 +31,15 @@ class RobotContainer {
  public:
   RobotContainer();
 
+  bool GetFieldRelativeState();
   frc2::Command* GetAutonomousCommand();
 
  private:
   // The driver's controller
-  frc::XboxController m_driverController{IOConstants::kDriverControllerPort};
+  frc::XboxController m_driveController{IOConstants::kDriverControllerPort};
+
+  // Variables 
+  bool isFieldRelative = true;
 
   // The robot's subsystems and commands are defined here...
 
