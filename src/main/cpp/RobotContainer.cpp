@@ -51,18 +51,28 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-    frc2::JoystickButton resetButton(&m_driveController, ControllerContstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the `Y` button on exampleController    
     
-   // resetButton.OnTrue(frc2::cmd::Run([&m_drive] {m_drive.ZeroHeading();}, [&m_drive]));
+    frc2::JoystickButton resetButton(&m_driveController, ControllerContstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
+    frc2::JoystickButton slowSwitch(&m_driveController, ControllerContstants::kSlowStateSwtichIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
 
-   // m_driveController.GetRawButtonPressed(ControllerContstants::kResetGyroButtonIndex).OnTrue(m_drive.ZeroHeading());
-}
+    // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
+    resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
+    slowSwitch.OnTrue(frc2::cmd::Run([&] {            
+            m_drive.Drive(
+                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftYIndex)}),
+                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftXIndex)}),
+                (0.5 *  units::radians_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveRightXIndex)}), 
+                m_driveController.GetRawButton(ControllerContstants::kFieldRelativeSwitchIndex)); 
+        }, 
+        {&m_drive}));
 
-bool RobotContainer::GetFieldRelativeState() {
-    return isFieldRelative;
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+    /**
+     * CURENTLY DOES NOT RETURN ANYTHING
+    */
+
     // Set up config for trajectory
     frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
                                 AutoConstants::kMaxAcceleration);

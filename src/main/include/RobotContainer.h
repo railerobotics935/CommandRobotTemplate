@@ -31,7 +31,6 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  bool GetFieldRelativeState();
   frc2::Command* GetAutonomousCommand();
 
  private:
