@@ -90,6 +90,12 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ResetOdometry(frc::Pose2d pose);
 
+    /**
+     * Sets the wheels on the swerve modules in an X shape 
+     * 
+    */
+   void Park();
+
   units::meter_t kTrackWidth =
       0.5_m;  // Distance between centers of right and left wheels on robot
   units::meter_t kWheelBase =

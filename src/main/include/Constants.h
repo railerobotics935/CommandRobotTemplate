@@ -102,7 +102,7 @@ extern const frc::TrapezoidProfile<units::radians>::Constraints
 
 }  // namespace AutoConstants
 
-namespace ControllerContstants{
+namespace ControllerConstants{
 
 // Controller Constants for the flight elite drive controller
 
@@ -112,13 +112,13 @@ constexpr int kDriveLeftXIndex = 4; // An imput RIGHT creates a NEGATIVE output
 constexpr int kDriveRightYIndex = 1; // An imput UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 0; // An imput RIGHT creates a NEGATIVE output
 
-// Button/Swtich indexes
+// Button/Switch indexes
 constexpr int kFieldRelativeSwitchIndex = 0;
 constexpr int kParkSwitchIndex = 1;
-constexpr int kSlowStateSwtichIndex = 4;
+constexpr int kSlowStateSwitchIndex = 4;
 constexpr int kResetGyroButtonIndex = 2;
 
-} // namespace ControllerContstants
+} // namespace ControllerConstants
 
 namespace IOConstants {
 constexpr int kDriverControllerPort = 0;

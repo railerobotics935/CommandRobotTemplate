@@ -30,6 +30,8 @@
 using namespace DriveConstants;
 using namespace pathplanner;
 
+// TODO: change "RearLeft" to "BackLeft" and same with the right
+
 RobotContainer::RobotContainer() {
     // Initialize all of your commands and subsystems here
 
@@ -42,30 +44,31 @@ RobotContainer::RobotContainer() {
     m_drive.SetDefaultCommand(frc2::RunCommand(
         [this] {
             m_drive.Drive(
-                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftYIndex)},
-                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftXIndex)},
-                units::radians_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveRightXIndex)}, 
-                m_driveController.GetRawButton(ControllerContstants::kFieldRelativeSwitchIndex));
+                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex)},
+                units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex)},
+                units::radians_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex)}, 
+                m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex));
         },
         {&m_drive}));
 }
 
 void RobotContainer::ConfigureButtonBindings() {
     
-    frc2::JoystickButton resetButton(&m_driveController, ControllerContstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
-    frc2::JoystickButton slowSwitch(&m_driveController, ControllerContstants::kSlowStateSwtichIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
+    frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
+    frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
+    frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller    
 
     // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
     resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
     slowSwitch.OnTrue(frc2::cmd::Run([&] {            
             m_drive.Drive(
-                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftYIndex)}),
-                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveLeftXIndex)}),
-                (0.5 *  units::radians_per_second_t{m_driveController.GetRawAxis(ControllerContstants::kDriveRightXIndex)}), 
-                m_driveController.GetRawButton(ControllerContstants::kFieldRelativeSwitchIndex)); 
+                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex)}),
+                (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex)}),
+                (0.5 *  units::radians_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex)}), 
+                m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex)); 
         }, 
         {&m_drive}));
-
+    parkSwitch.OnTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
