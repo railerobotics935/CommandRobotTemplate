@@ -14,9 +14,9 @@
  * 
  * First bassed off of the wpilib example program for the swerve auto command.
  *
- * TODO: Convert all of the details for the serve drive over to the 2023 robot configuration
- * TODO: Add port numbers for the 2023 robot Configuration
- * TODO: Convert PathPlanning to use a Pathplanner trajectory
+ * TODO: Update Pathplannery libary 
+ * TODO: attempt to implement pathplanning with new pathplanner system
+ * TODO: finish adding arm and wrist subsystems to the code
  * 
  *  Erik Kaufman
 */

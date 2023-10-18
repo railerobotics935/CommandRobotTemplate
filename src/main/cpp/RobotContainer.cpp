@@ -60,7 +60,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
     // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
     resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
-    slowSwitch.OnTrue(frc2::cmd::Run([&] {            
+    slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
             m_drive.Drive(
                 (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex)}),
                 (0.5 * units::meters_per_second_t{m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex)}),
@@ -68,9 +68,10 @@ void RobotContainer::ConfigureButtonBindings() {
                 m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex)); 
         }, 
         {&m_drive}));
-    parkSwitch.OnTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
+    parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 }
 
+// TODO: Update Path planner. It keeps geting updated and has refined the system to make alot more sence
 frc2::Command* RobotContainer::GetAutonomousCommand() {
     /**
      * CURENTLY DOES NOT RETURN ANYTHING
