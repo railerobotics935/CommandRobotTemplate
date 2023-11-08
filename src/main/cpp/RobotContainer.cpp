@@ -110,6 +110,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     );
 
     frc2::CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
+    return fullAuto.get();
 /*
 frc2::SwerveControllerCommand<4> swerveControllerCommand(
     exampleTrajectory, [this]() { return m_drive.GetPose(); },

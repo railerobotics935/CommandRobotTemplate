@@ -31,19 +31,19 @@ namespace DriveConstants {
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 11;
-constexpr int kRearLeftDriveMotorPort = 9;
-constexpr int kFrontRightDriveMotorPort = 19;
+constexpr int kRearLeftDriveMotorPort = 19;
+constexpr int kFrontRightDriveMotorPort = 9;
 constexpr int kRearRightDriveMotorPort = 21;
 
 constexpr int kFrontLeftTurningMotorPort = 12;
-constexpr int kRearLeftTurningMotorPort = 10;
-constexpr int kFrontRightTurningMotorPort = 20;
+constexpr int kRearLeftTurningMotorPort = 20;
+constexpr int kFrontRightTurningMotorPort = 10;
 constexpr int kRearRightTurningMotorPort = 2;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = 0;
-constexpr int kRearLeftTurningEncoderPort = 1;
-constexpr int kFrontRightTurningEncoderPort = 2;
+constexpr int kRearLeftTurningEncoderPort = 2;
+constexpr int kFrontRightTurningEncoderPort = 1;
 constexpr int kRearRightTurningEncoderPort = 3;
 
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
