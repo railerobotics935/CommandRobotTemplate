@@ -126,8 +126,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
 
   SwerveModule m_frontLeft;
   SwerveModule m_frontRight;
-  SwerveModule m_rearLeft;
-  SwerveModule m_rearRight;
+  SwerveModule m_backLeft;
+  SwerveModule m_backRight;
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro;

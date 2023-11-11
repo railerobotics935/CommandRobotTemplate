@@ -31,27 +31,27 @@ namespace DriveConstants {
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 11;
-constexpr int kRearLeftDriveMotorPort = 19;
+constexpr int kBackLeftDriveMotorPort = 19;
 constexpr int kFrontRightDriveMotorPort = 9;
-constexpr int kRearRightDriveMotorPort = 21;
+constexpr int kBackRightDriveMotorPort = 21;
 
 constexpr int kFrontLeftTurningMotorPort = 12;
-constexpr int kRearLeftTurningMotorPort = 20;
+constexpr int kBackLeftTurningMotorPort = 20;
 constexpr int kFrontRightTurningMotorPort = 10;
-constexpr int kRearRightTurningMotorPort = 2;
+constexpr int kBackRightTurningMotorPort = 2;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = 0;
-constexpr int kRearLeftTurningEncoderPort = 2;
+constexpr int kBackLeftTurningEncoderPort = 2;
 constexpr int kFrontRightTurningEncoderPort = 1;
-constexpr int kRearRightTurningEncoderPort = 3;
+constexpr int kBackRightTurningEncoderPort = 3;
 
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
 constexpr double kFrontLeftDriveEncoderOffset = 1.113 - std::numbers::pi;
 constexpr double kFrontRightDriveEncoderOffset = -0.155 - std::numbers::pi;
-constexpr double kRearLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
-constexpr double kRearRightDriveEncoderOffset = -1.850 - std::numbers::pi;
+constexpr double kBackLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
+constexpr double kBackRightDriveEncoderOffset = -1.850 - std::numbers::pi;
 
 // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
 // These characterization values MUST be determined either experimentally or
@@ -64,8 +64,8 @@ constexpr auto ka = 0.15 * 1_V * 1_s * 1_s / 1_m;
 // Example value only - as above, this must be tuned for your drive!
 constexpr double kPFrontLeftVel = 0.5;
 constexpr double kPFrontRightVel = 0.5;
-constexpr double kPRearLeftVel = 0.5;
-constexpr double kPRearRightVel = 0.5;
+constexpr double kPBackLeftVel = 0.5;
+constexpr double kPBackRightVel = 0.5;
 }  // namespace DriveConstants
 
 namespace ModuleConstants {

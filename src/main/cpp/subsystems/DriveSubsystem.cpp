@@ -33,22 +33,22 @@ DriveSubsystem::DriveSubsystem()
         kFrontRightTurningEncoderPort,
         kFrontRightDriveEncoderOffset},
     
-    m_rearLeft{
-        kRearLeftDriveMotorPort,       
-        kRearLeftTurningMotorPort,
-        kRearLeftTurningEncoderPort,
-        kRearLeftDriveEncoderOffset},
+    m_backLeft{
+        kBackLeftDriveMotorPort,       
+        kBackLeftTurningMotorPort,
+        kBackLeftTurningEncoderPort,
+        kBackLeftDriveEncoderOffset},
 
-    m_rearRight{
-        kRearRightDriveMotorPort,       
-        kRearRightTurningMotorPort,  
-        kRearRightTurningEncoderPort,
-        kRearRightDriveEncoderOffset},
+    m_backRight{
+        kBackRightDriveMotorPort,       
+        kBackRightTurningMotorPort,  
+        kBackRightTurningEncoderPort,
+        kBackRightDriveEncoderOffset},
 
     m_odometry{m_driveKinematics,
                 m_gyro.GetAngle(),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
-                m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+                m_backLeft.GetPosition(), m_backRight.GetPosition()},
                 frc::Pose2d{}} 
 {
 /* New Pathplanner version
@@ -74,8 +74,8 @@ AutoBuilder::configureHolonomic(
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetAngle(),
-                    {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
-                     m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+                    {m_frontLeft.GetPosition(), m_backLeft.GetPosition(),
+                     m_frontRight.GetPosition(), m_backRight.GetPosition()});
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -93,8 +93,8 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
-  m_rearLeft.SetDesiredState(bl);
-  m_rearRight.SetDesiredState(br);
+  m_backLeft.SetDesiredState(bl);
+  m_backRight.SetDesiredState(br);
 }
 
 void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
@@ -106,8 +106,8 @@ void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
 
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
-  m_rearLeft.SetDesiredState(bl);
-  m_rearRight.SetDesiredState(br);
+  m_backLeft.SetDesiredState(bl);
+  m_backRight.SetDesiredState(br);
 }
 
 void DriveSubsystem::SetModuleStates(
@@ -116,8 +116,8 @@ void DriveSubsystem::SetModuleStates(
                                          AutoConstants::kMaxSpeed);
   m_frontLeft.SetDesiredState(desiredStates[0]);
   m_frontRight.SetDesiredState(desiredStates[1]);
-  m_rearLeft.SetDesiredState(desiredStates[2]);
-  m_rearRight.SetDesiredState(desiredStates[3]);
+  m_backLeft.SetDesiredState(desiredStates[2]);
+  m_backRight.SetDesiredState(desiredStates[3]);
 }
 
 // Method to put the Robot in Park
@@ -135,8 +135,8 @@ void DriveSubsystem::Park()
 
   m_frontLeft.SetDesiredState(fl);
   m_frontRight.SetDesiredState(fr);
-  m_rearLeft.SetDesiredState(bl);
-  m_rearRight.SetDesiredState(br);
+  m_backLeft.SetDesiredState(bl);
+  m_backRight.SetDesiredState(br);
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
@@ -159,14 +159,14 @@ frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeSpeeds()
 {
   return m_driveKinematics.ToChassisSpeeds(m_frontLeft.GetState(), 
                                            m_frontRight.GetState(),
-                                           m_rearLeft.GetState(),
-                                           m_rearRight.GetState());
+                                           m_backLeft.GetState(),
+                                           m_backRight.GetState());
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   m_odometry.ResetPosition(
       GetHeading(),
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
-       m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+       m_backLeft.GetPosition(), m_backRight.GetPosition()},
       pose);
 }
