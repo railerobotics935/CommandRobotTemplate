@@ -8,6 +8,7 @@
 
 #include <frc/AnalogInput.h>
 #include <frc/controller/PIDController.h>
+#include <frc/controller/SimpleMotorFeedforward.h>
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/SwerveModulePosition.h>
@@ -37,9 +38,6 @@ class SwerveModule {
   // We have to use meters here instead of radians due to the fact that
   // ProfiledPIDController's constraints only take in meters per second and
   // meters per second squared.
-
-  static constexpr auto kModuleMaxAngularVelocity = 18.0 * std::numbers::pi * 1_rad_per_s;  // radians per second
-  static constexpr auto kModuleMaxAngularAcceleration = 8.0 * std::numbers::pi * 2_rad_per_s / 1_s;  // radians per second^2
   
   rev::CANSparkMax m_driveMotor;
   rev::CANSparkMax m_turningMotor;
@@ -49,9 +47,11 @@ class SwerveModule {
   
   double m_kTurningEncoderOffset;
   
-  frc2::PIDController m_drivePIDController{1.0, 0.0, 0.0 };
+  frc2::PIDController m_drivePIDController{ModuleConstants::kPModuleDriveController, 0, 0};
 
   frc::ProfiledPIDController<units::radians> m_turningPIDController{
       12.5, 190.0, 0.15,
-      {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}};
+      {ModuleConstants::kModuleMaxAngularVelocity, ModuleConstants::kModuleMaxAngularAcceleration}};
+  frc::SimpleMotorFeedforward<units::meters> m_driveFeedforward{0.5_V, 1_V / 1_mps};
+
 };

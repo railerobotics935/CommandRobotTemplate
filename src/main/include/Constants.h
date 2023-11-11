@@ -31,56 +31,50 @@ namespace DriveConstants {
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 11;
-constexpr int kBackLeftDriveMotorPort = 19;
 constexpr int kFrontRightDriveMotorPort = 9;
+constexpr int kBackLeftDriveMotorPort = 19;
 constexpr int kBackRightDriveMotorPort = 21;
 
 constexpr int kFrontLeftTurningMotorPort = 12;
-constexpr int kBackLeftTurningMotorPort = 20;
 constexpr int kFrontRightTurningMotorPort = 10;
+constexpr int kBackLeftTurningMotorPort = 20;
 constexpr int kBackRightTurningMotorPort = 2;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = 0;
-constexpr int kBackLeftTurningEncoderPort = 2;
 constexpr int kFrontRightTurningEncoderPort = 1;
+constexpr int kBackLeftTurningEncoderPort = 2;
 constexpr int kBackRightTurningEncoderPort = 3;
 
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
-constexpr double kFrontLeftDriveEncoderOffset = 1.113 - std::numbers::pi;
-constexpr double kFrontRightDriveEncoderOffset = -0.155 - std::numbers::pi;
-constexpr double kBackLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
-constexpr double kBackRightDriveEncoderOffset = -1.850 - std::numbers::pi;
+constexpr double kFrontLeftDriveEncoderOffset = 1.113 + std::numbers::pi;
+constexpr double kFrontRightDriveEncoderOffset = 2.787 + std::numbers::pi;
+constexpr double kBackLeftDriveEncoderOffset =  -0.155 + std::numbers::pi;
+constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 
-// These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-// These characterization values MUST be determined either experimentally or
-// theoretically for *your* robot's drive. The SysId tool provides a convenient
-// method for obtaining these values for your robot.
-constexpr auto ks = 1_V;
-constexpr auto kv = 0.8 * 1_V * 1_s / 1_m;
-constexpr auto ka = 0.15 * 1_V * 1_s * 1_s / 1_m;
+constexpr auto kRobotMaxLinearVelocity = 16_mps;
+constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
 
-// Example value only - as above, this must be tuned for your drive!
-constexpr double kPFrontLeftVel = 0.5;
-constexpr double kPFrontRightVel = 0.5;
-constexpr double kPBackLeftVel = 0.5;
-constexpr double kPBackRightVel = 0.5;
 }  // namespace DriveConstants
 
 namespace ModuleConstants {
 // This is something to try and get rid of
 // If feels like there should be something like this built into the systems
 constexpr double ANALOG_TO_RAD_FACTOR = 1.2566;     // 0 to 5.0 volt = 2PI rad
-constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt = 2PI rad
+constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt = 2PI rad  should come back and revisit this to maybe fix anolog things.
 
 constexpr int kEncoderCPR = 1024;
-constexpr double kWheelDiameterMeters = 0.15;
+constexpr double kWheelRadiusMeters = 0.0508;
 constexpr int kEncoderResolution = 42;
 constexpr double kGearRatio = 6.75;
 
-constexpr double kDriveEncoderConversionFacotr = (2.0 * std::numbers::pi * kWheelDiameterMeters 
+constexpr double kDriveEncoderConversionFacotr = (2.0 * std::numbers::pi * kWheelRadiusMeters 
                                                 / (kGearRatio * kEncoderResolution));
+
+constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
+constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
+constexpr auto kMaxLinearVelocity = 16_mps;
 
 constexpr double kPModuleTurningController = 1;
 constexpr double kPModuleDriveController = 1;
@@ -114,10 +108,10 @@ constexpr int kDriveRightYIndex = 1; // An imput UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 0; // An imput RIGHT creates a NEGATIVE output
 
 // Button/Switch indexes
-constexpr int kFieldRelativeSwitchIndex = 0;
-constexpr int kParkSwitchIndex = 1;
-constexpr int kSlowStateSwitchIndex = 4;
-constexpr int kResetGyroButtonIndex = 2;
+constexpr int kFieldRelativeSwitchIndex = 1;
+constexpr int kParkSwitchIndex = 2;
+constexpr int kSlowStateSwitchIndex = 5;
+constexpr int kResetGyroButtonIndex = 3;
 
 } // namespace ControllerConstants
 

@@ -13,6 +13,7 @@
 #include <frc2/command/PIDCommand.h>
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
+#include <frc/filter/SlewRateLimiter.h>
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
@@ -43,8 +44,11 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
 
-  // The chooser for the autonomous routines
-  frc::SendableChooser<frc2::Command*> m_chooser;
+  // Slew rate limiters to make joystick inputs more gentle; 1/2 sec from 0
+  // to 1.
+  frc::SlewRateLimiter<units::scalar> m_xSpeedLimiter{2 / 1_s};
+  frc::SlewRateLimiter<units::scalar> m_ySpeedLimiter{2 / 1_s};
+  frc::SlewRateLimiter<units::scalar> m_rotLimiter{2 / 1_s};
 
   void ConfigureButtonBindings();
 };

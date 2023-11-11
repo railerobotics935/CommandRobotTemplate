@@ -74,8 +74,8 @@ AutoBuilder::configureHolonomic(
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(m_gyro.GetAngle(),
-                    {m_frontLeft.GetPosition(), m_backLeft.GetPosition(),
-                     m_frontRight.GetPosition(), m_backRight.GetPosition()});
+                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
+                    m_backLeft.GetPosition(), m_backRight.GetPosition()});
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -87,7 +87,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                           xSpeed, ySpeed, rot, m_gyro.GetAngle())
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
-  m_driveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kMaxLinearVelocity);
 
   auto [fl, fr, bl, br] = states;
 
@@ -100,7 +100,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
   auto states = m_driveKinematics.ToSwerveModuleStates(speeds);
 
-  m_driveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kMaxLinearVelocity);
 
   auto [fl, fr, bl, br] = states;
 
@@ -113,7 +113,7 @@ void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
 void DriveSubsystem::SetModuleStates(
     wpi::array<frc::SwerveModuleState, 4> desiredStates) {
   m_driveKinematics.DesaturateWheelSpeeds(&desiredStates,
-                                         AutoConstants::kMaxSpeed);
+                                         ModuleConstants::kMaxLinearVelocity);
   m_frontLeft.SetDesiredState(desiredStates[0]);
   m_frontRight.SetDesiredState(desiredStates[1]);
   m_backLeft.SetDesiredState(desiredStates[2]);

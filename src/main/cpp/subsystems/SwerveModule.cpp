@@ -21,9 +21,13 @@ SwerveModule::SwerveModule(int driveMotorPort,
 
   // Set the distance per pulse for the drive encoder. We can simply use the
   // distance traveled for one rotation of the wheel divided by the encoder
-  // resolution.
+  // resolution. Don't forget the gear ratio of the swerve drive module.
   m_driveEncoder.SetVelocityConversionFactor(ModuleConstants::kDriveEncoderConversionFacotr);
   m_driveEncoder.SetPositionConversionFactor(ModuleConstants::kDriveEncoderConversionFacotr);
+
+  // Invert Turing motor so it turns CCW for positive voltage
+  m_driveMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  m_turningMotor.SetInverted(true);
 
   // Limit the PID Controller's input range between -pi and pi and set the input
   // to be continuous.
@@ -47,7 +51,7 @@ void SwerveModule::SetDesiredState(
     const frc::SwerveModuleState& referenceState) {
   // Optimize the reference state to avoid spinning further than 90 degrees
   const auto state = frc::SwerveModuleState::Optimize(
-      referenceState, units::radian_t{(m_turningEncoder.GetVoltage() * ModuleConstants::ANALOG_TO_RAD_FACTOR) - m_kTurningEncoderOffset});
+      referenceState, GetState().angle.Radians());
 
   // Calculate the drive output from the drive PID controller.
   const auto driveOutput = m_drivePIDController.Calculate(
@@ -55,15 +59,13 @@ void SwerveModule::SetDesiredState(
 
   // Calculate the turning motor output from the turning PID controller.
   auto turnOutput = m_turningPIDController.Calculate(
-      units::radian_t{(m_turningEncoder.GetVoltage() * ModuleConstants::ANALOG_TO_RAD_FACTOR) - m_kTurningEncoderOffset}, state.angle.Radians());
+      GetState().angle.Radians(), state.angle.Radians());
+
+  const auto driveFeedforward = m_driveFeedforward.Calculate(state.speed);
 
   // Set the motor outputs.
-  m_driveMotor.Set(driveOutput);
-  m_turningMotor.Set(turnOutput);
+  m_driveMotor.SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
+  m_turningMotor.SetVoltage(units::volt_t{turnOutput});
+  
 }
 
-// No reason to reset encoders since they are absolute
-//void SwerveModule::ResetEncoders() {
-//  m_driveEncoder.Reset();
-//  m_turningEncoder.Reset();
-//}
