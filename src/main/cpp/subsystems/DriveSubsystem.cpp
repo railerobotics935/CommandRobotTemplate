@@ -8,40 +8,68 @@
 #include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <units/velocity.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/ChassisSpeeds.h>
+
+//#include "pathplanner/lib/auto/AutoBuilder.h"
+//#include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
+//#include "pathplanner/lib/util/PIDConstants.h"
+//#include "pathplanner/lib/util/ReplanningConfig.h"
+
 #include <iostream>
 #include "Constants.h"
 
 using namespace DriveConstants;
 
 DriveSubsystem::DriveSubsystem()
-    : m_frontLeft{kFrontLeftDriveMotorPort,
-                  kFrontLeftTurningMotorPort,
-                  kFrontLeftTurningEncoderPort,
-                  kFrontLeftDriveEncoderOffset},
+  : m_frontLeft{kFrontLeftDriveMotorPort,
+                kFrontLeftTurningMotorPort,
+                kFrontLeftTurningEncoderPort,
+                kFrontLeftDriveEncoderOffset},
 
-      m_rearLeft{
-          kRearLeftDriveMotorPort,       
-          kRearLeftTurningMotorPort,
-          kRearLeftTurningEncoderPort,
-          kRearLeftDriveEncoderOffset},
+    m_frontRight{
+        kFrontRightDriveMotorPort,       
+        kFrontRightTurningMotorPort,
+        kFrontRightTurningEncoderPort,
+        kFrontRightDriveEncoderOffset},
+    
+    m_rearLeft{
+        kRearLeftDriveMotorPort,       
+        kRearLeftTurningMotorPort,
+        kRearLeftTurningEncoderPort,
+        kRearLeftDriveEncoderOffset},
 
-      m_frontRight{
-          kFrontRightDriveMotorPort,       
-          kFrontRightTurningMotorPort,
-          kFrontRightTurningEncoderPort,
-          kFrontRightDriveEncoderOffset},
+    m_rearRight{
+        kRearRightDriveMotorPort,       
+        kRearRightTurningMotorPort,  
+        kRearRightTurningEncoderPort,
+        kRearRightDriveEncoderOffset},
 
-      m_rearRight{
-          kRearRightDriveMotorPort,       
-          kRearRightTurningMotorPort,  
-          kRearRightTurningEncoderPort,
-          kRearRightDriveEncoderOffset},
+    m_odometry{m_driveKinematics,
+                m_gyro.GetAngle(),
+                {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
+                m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+                frc::Pose2d{}} 
+{
+/* New Pathplanner version
+// Configure the AutoBuilder last
+AutoBuilder::configureHolonomic(
+    [this](){ return GetPose(); }, // Robot pose supplier
+    [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
+    [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    [this](frc::ChassisSpeeds speeds){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+    HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+        PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+        PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+        4.5_mps, // Max module speed, in m/s
+        0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
+        ReplanningConfig() // Default path replanning config. See the API for the options here
+    ),
+    this // Reference to this subsystem to set requirements
+);
 
-      m_odometry{kDriveKinematics,
-                 m_gyro.GetAngle(),
-                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
-                  m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+*/
+}
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
@@ -54,12 +82,25 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
                            bool fieldRelative) {
-  auto states = kDriveKinematics.ToSwerveModuleStates(
+  auto states = m_driveKinematics.ToSwerveModuleStates(
       fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                           xSpeed, ySpeed, rot, m_gyro.GetAngle())
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
-  kDriveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+  m_driveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
+
+  auto [fl, fr, bl, br] = states;
+
+  m_frontLeft.SetDesiredState(fl);
+  m_frontRight.SetDesiredState(fr);
+  m_rearLeft.SetDesiredState(bl);
+  m_rearRight.SetDesiredState(br);
+}
+
+void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
+  auto states = m_driveKinematics.ToSwerveModuleStates(speeds);
+
+  m_driveKinematics.DesaturateWheelSpeeds(&states, AutoConstants::kMaxSpeed);
 
   auto [fl, fr, bl, br] = states;
 
@@ -71,7 +112,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 
 void DriveSubsystem::SetModuleStates(
     wpi::array<frc::SwerveModuleState, 4> desiredStates) {
-  kDriveKinematics.DesaturateWheelSpeeds(&desiredStates,
+  m_driveKinematics.DesaturateWheelSpeeds(&desiredStates,
                                          AutoConstants::kMaxSpeed);
   m_frontLeft.SetDesiredState(desiredStates[0]);
   m_frontRight.SetDesiredState(desiredStates[1]);
@@ -112,6 +153,14 @@ double DriveSubsystem::GetTurnRate() {
 
 frc::Pose2d DriveSubsystem::GetPose() {
   return m_odometry.GetPose();
+}
+
+frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeSpeeds()
+{
+  return m_driveKinematics.ToChassisSpeeds(m_frontLeft.GetState(), 
+                                           m_frontRight.GetState(),
+                                           m_rearLeft.GetState(),
+                                           m_rearRight.GetState());
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {

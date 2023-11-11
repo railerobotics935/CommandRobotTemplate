@@ -17,8 +17,6 @@
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
-#include "pathplanner/lib/PathPlannerTrajectory.h"
-#include "pathplanner/lib/auto/SwerveAutoBuilder.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since

@@ -21,16 +21,14 @@
 #include <units/velocity.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include "pathplanner/lib/auto/SwerveAutoBuilder.h"
 #include "pathplanner/lib/PathPlanner.h"
+#include "pathplanner/lib/auto/SwerveAutoBuilder.h"
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
-
-// TODO: change "RearLeft" to "BackLeft" and same with the right
 
 RobotContainer::RobotContainer() {
     // Initialize all of your commands and subsystems here
@@ -71,17 +69,13 @@ void RobotContainer::ConfigureButtonBindings() {
     parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 }
 
-// TODO: Update Path planner. It keeps geting updated and has refined the system to make alot more sence
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-    /**
-     * CURENTLY DOES NOT RETURN ANYTHING
-    */
 
-    // Set up config for trajectory
+      // Set up config for trajectory
     frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
                                 AutoConstants::kMaxAcceleration);
     // Add kinematics to ensure max speed is actually obeyed
-    config.SetKinematics(m_drive.kDriveKinematics);
+    config.SetKinematics(m_drive.m_driveKinematics);
 
 
     std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("ExampleAuto1", {PathConstraints(4_mps, 3_mps_sq)});
@@ -100,7 +94,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     SwerveAutoBuilder autoBuilder(
         [this]() { return m_drive.GetPose(); }, // Function to supply current robot pose
         [this](auto initPose) { m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-        m_drive.kDriveKinematics,
+        m_drive.m_driveKinematics,
         PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
         PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
         [this](auto states) { m_drive.SetModuleStates(states); }, // Output function that accepts field relative ChassisSpeeds
@@ -115,7 +109,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 frc2::SwerveControllerCommand<4> swerveControllerCommand(
     exampleTrajectory, [this]() { return m_drive.GetPose(); },
 
-    m_drive.kDriveKinematics,
+    m_drive.m_driveKinematics,
 
     frc2::PIDController{AutoConstants::kPXController, 0, 0},
     frc2::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
@@ -133,5 +127,7 @@ return new frc2::SequentialCommandGroup(
     frc2::InstantCommand(
         [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
 
-        */
+    */
+  
+
 }

@@ -49,8 +49,8 @@ constexpr int kRearRightTurningEncoderPort = 3;
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
 constexpr double kFrontLeftDriveEncoderOffset = 1.113 - std::numbers::pi;
-constexpr double kRearLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
 constexpr double kFrontRightDriveEncoderOffset = -0.155 - std::numbers::pi;
+constexpr double kRearLeftDriveEncoderOffset = 2.787 - std::numbers::pi;
 constexpr double kRearRightDriveEncoderOffset = -1.850 - std::numbers::pi;
 
 // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
@@ -63,8 +63,8 @@ constexpr auto ka = 0.15 * 1_V * 1_s * 1_s / 1_m;
 
 // Example value only - as above, this must be tuned for your drive!
 constexpr double kPFrontLeftVel = 0.5;
-constexpr double kPRearLeftVel = 0.5;
 constexpr double kPFrontRightVel = 0.5;
+constexpr double kPRearLeftVel = 0.5;
 constexpr double kPRearRightVel = 0.5;
 }  // namespace DriveConstants
 
@@ -88,6 +88,7 @@ constexpr double kPModuleDriveController = 1;
 
 namespace AutoConstants {
 
+// Not valuable numbers yet
 constexpr auto kMaxSpeed = 3_mps;
 constexpr auto kMaxAcceleration = 3_mps_sq;
 constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;

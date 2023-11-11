@@ -29,7 +29,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // Subsystem methods go here.
 
   /**
-   * Drives the robot at given x, no effect o y and theta speeds. Speeds range from [-1, 1]
+   * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
    * and the linear speeds haven the angular speed.
    *
    * @param xSpeed        Speed of the robot in the x direction
@@ -42,6 +42,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void Drive(units::meters_per_second_t xSpeed,
              units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
              bool fieldRelative);
+
+  /**
+   * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
+   * 
+   * @param speeds        the Chasis speed of the robot 
+   *                      (Xspeed, Yspeed, ROTspeed)
+  */
+  void DriveWithChassisSpeeds(frc::ChassisSpeeds speeds);
 
   /**
    * Resets the drive encoders to currently read a position of 0.
@@ -80,6 +88,13 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @return The pose.
    */
   frc::Pose2d GetPose();
+  
+  /**
+   * Returns the chassis speeds of the robot IN ROBOT RELATIVE
+   * 
+   * @return Robot chassis speeds
+  */
+  frc::ChassisSpeeds GetRobotRelativeSpeeds();
 
   /**
    * Resets the odometry to the specified pose.
@@ -99,7 +114,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
   units::meter_t kWheelBase =
       0.7_m;  // Distance between centers of front and back wheels on robot
 
-  frc::SwerveDriveKinematics<4> kDriveKinematics{
+  frc::SwerveDriveKinematics<4> m_driveKinematics{
       frc::Translation2d{kWheelBase / 2, kTrackWidth / 2},
       frc::Translation2d{kWheelBase / 2, -kTrackWidth / 2},
       frc::Translation2d{-kWheelBase / 2, kTrackWidth / 2},
@@ -110,8 +125,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   SwerveModule m_frontLeft;
-  SwerveModule m_rearLeft;
   SwerveModule m_frontRight;
+  SwerveModule m_rearLeft;
   SwerveModule m_rearRight;
 
   // The gyro sensor
