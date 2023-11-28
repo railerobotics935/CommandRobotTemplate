@@ -77,7 +77,7 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
-
+/*
       // Set up config for trajectory
     frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
                                 AutoConstants::kMaxAcceleration);
@@ -113,7 +113,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     frc2::CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
     frc2::Command* autoCommand = fullAuto.get();
     return autoCommand;
-/*
+*/
   // Set up config for trajectory
   frc::TrajectoryConfig config{AutoConstants::kMaxSpeed,
                                AutoConstants::kMaxAcceleration};
@@ -126,10 +126,10 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
       // Start at the origin facing the +X direction
       frc::Pose2d{0_m, 0_m, 0_deg},
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d{1_m, 1_m}, frc::Translation2d{2_m, -1_m}, frc::Translation2d{0_m,0_m}},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d{3_m, 0_m, 180_deg},
+      // Pass through these two interior waypoints, making an 'O' curve path
+      {frc::Translation2d{1_m, 1_m}, frc::Translation2d{2_m, 0_m}, frc::Translation2d{1_m,-1_m}},
+      // End where we started rotated 180 degrees
+      frc::Pose2d{0_m, 0_m, 180_deg},
       // Pass the config
       config);
 
@@ -153,7 +153,7 @@ return new frc2::SequentialCommandGroup(
     std::move(swerveControllerCommand),
     frc2::InstantCommand(
         [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
-    */
+    
     
   
 

@@ -53,8 +53,8 @@ constexpr double kFrontRightDriveEncoderOffset = 2.787 + std::numbers::pi;
 constexpr double kBackLeftDriveEncoderOffset =  -0.155 + std::numbers::pi;
 constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 
-constexpr auto kRobotMaxLinearVelocity = 16_mps;
-constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
+constexpr auto kRobotMaxLinearVelocity = 14_mps; 
+constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 4_rad_per_s; 
 
 }  // namespace DriveConstants
 
@@ -114,6 +114,19 @@ constexpr int kSlowStateSwitchIndex = 5;
 constexpr int kResetGyroButtonIndex = 3;
 
 } // namespace ControllerConstants
+
+namespace ArmConstatns {
+    
+// Lengths of the parts of the arm in meters
+constexpr double lengthOfLowerArm = 0.722;
+constexpr double lengthOfPushRodArm = 0.787;
+constexpr double lengthOfFullWrist = 0.02815;
+
+// 3D translation of the center of the Robot(Unsure - was first turret), at the height of the lower arm pivot point.
+constexpr double xTranslationOfArm = -0.089;
+constexpr double yTranslationOfArm = -0.325;
+constexpr double zTranslationOfArm = +0.287;
+}
 
 namespace IOConstants {
 constexpr int kDriverControllerPort = 0;

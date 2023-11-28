@@ -46,15 +46,6 @@ public:
   void SetPushRodArmRawAngle(double angle);
 
 private:
-  // Lengths of the parts of the arm in meters
-  double lengthOfLowerArm = 0.722;
-  double lengthOfPushRodArm = 0.787;
-  double lengthOfFullWrist = 0.02815;
-
-  // 3D translation of the center of the Robot(Unsure - was first turret), at the height of the lower arm pivot point.
-  double xTranslationOfArm = -0.089;
-  double yTranslationOfArm = -0.325;
-  double zTranslationOfArm = +0.287;
 
   // measured offsets DON'T TOUCH
   double turretEncoderOffset = -0.972;
