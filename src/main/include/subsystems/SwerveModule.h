@@ -24,7 +24,7 @@
 class SwerveModule {
  public:
   SwerveModule(int driveMotorPort, int turningMotorPort,
-                const int turningEncoderPort, const double turningEncoderOffset);
+                const int turningEncoderPort, const double turningEncoderOffset, bool usesRioAnologInput);
 
   frc::SwerveModuleState GetState();
 
@@ -46,6 +46,7 @@ class SwerveModule {
   frc::AnalogInput m_turningEncoder;
   
   double m_kTurningEncoderOffset;
+  bool m_usesRioAnologInput = true;
   
   frc2::PIDController m_drivePIDController{ModuleConstants::kPModuleDriveController, 0, 0};
 

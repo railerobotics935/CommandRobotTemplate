@@ -25,25 +25,29 @@ DriveSubsystem::DriveSubsystem()
   : m_frontLeft{kFrontLeftDriveMotorPort,
                 kFrontLeftTurningMotorPort,
                 kFrontLeftTurningEncoderPort,
-                kFrontLeftDriveEncoderOffset},
+                kFrontLeftDriveEncoderOffset,
+                kFrontLeftUsesRioAnologInput},
 
     m_frontRight{
         kFrontRightDriveMotorPort,       
         kFrontRightTurningMotorPort,
         kFrontRightTurningEncoderPort,
-        kFrontRightDriveEncoderOffset},
+        kFrontRightDriveEncoderOffset,
+        kFrontRightUsesRioAnologInput},
     
     m_backLeft{
         kBackLeftDriveMotorPort,       
         kBackLeftTurningMotorPort,
         kBackLeftTurningEncoderPort,
-        kBackLeftDriveEncoderOffset},
+        kBackLeftDriveEncoderOffset,
+        kBackLeftUsesRioAnologInput},
 
     m_backRight{
         kBackRightDriveMotorPort,       
         kBackRightTurningMotorPort,  
         kBackRightTurningEncoderPort,
-        kBackRightDriveEncoderOffset},
+        kBackRightDriveEncoderOffset,
+        kBackRightUsesRioAnologInput},
 
     m_odometry{m_driveKinematics,
                 m_gyro.GetAngle(),

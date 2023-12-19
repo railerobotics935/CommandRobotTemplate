@@ -13,7 +13,8 @@
 SwerveModule::SwerveModule(int driveMotorPort, 
                         int turningMotorPort,
                         int turningEncoderPort, 
-                        double turningEncoderOffset)
+                        double turningEncoderOffset,
+                        bool usesRioAnologInput)
     : m_driveMotor(driveMotorPort, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
       m_turningMotor(turningMotorPort, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
       m_driveEncoder(m_driveMotor.GetEncoder()),
@@ -34,6 +35,7 @@ SwerveModule::SwerveModule(int driveMotorPort,
   m_turningPIDController.EnableContinuousInput(
       units::radian_t{-std::numbers::pi}, units::radian_t{std::numbers::pi});
   
+  // Sets
   m_kTurningEncoderOffset = turningEncoderOffset;
 }
 

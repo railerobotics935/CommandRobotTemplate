@@ -46,6 +46,12 @@ constexpr int kFrontRightTurningEncoderPort = 1;
 constexpr int kBackLeftTurningEncoderPort = 2;
 constexpr int kBackRightTurningEncoderPort = 3;
 
+// Uses Roborio Anolog input or sparkmax
+constexpr bool kFrontLeftUsesRioAnologInput = true;
+constexpr bool kFrontRightUsesRioAnologInput = true;
+constexpr bool kBackLeftUsesRioAnologInput = true;
+constexpr bool kBackRightUsesRioAnologInput = true;
+
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
 constexpr double kFrontLeftDriveEncoderOffset = 1.113 + std::numbers::pi;
